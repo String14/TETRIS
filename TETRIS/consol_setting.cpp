@@ -18,7 +18,7 @@ void consol_set() {
 	RECT r;
 	GetWindowRect(console, &r);
 	// 위치 가로, 위치 세로, 콘솔창 가로, 콘솔창 세로 
-	MoveWindow(console, 550, 250, 392, 450, TRUE);
+	MoveWindow(console, 550, 250, 395, 450, TRUE);
 
 	// Title 설정
 	system("title TETRIS by GUN");
