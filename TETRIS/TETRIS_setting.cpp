@@ -61,7 +61,6 @@ void TETRIS::setBLOCKinMAP() {
 	// == random_NEXTBLOCK 의 값이 -1 일 경우에만
 	// 랜덤 블록 생성 함수를 호출해서 출력될 블록을 설정해준다.
 	if (random_NEXTBLOCK == -1) setrandomBLOCK();
-	my_BLOCK = random_NEXTBLOCK;
 
 	// TETRIS_MAP 사출구 부분 청소 (테스트용, 나중에 필히 지울 것)
 	// *** TODO delete this loop ***
@@ -79,7 +78,7 @@ void TETRIS::setBLOCKinMAP() {
 			// 사출구 중, 블록을 출력해야 할 부분이 이미 차 있다면 GAME OVER
 			// 따라서 사출구와 블록이 모두 1 일 경우 GAME OVER 되는 것이다.
 			if (TETRIS_MAP[1 + i][5 + j] == 1 &&
-				TETRIS_BLOCK[my_BLOCK][i][j] == 1) {
+				TETRIS_BLOCK[random_NEXTBLOCK][i][j] == 1) {
 				GAME = OVER;
 				change2in1();
 			}
@@ -89,7 +88,7 @@ void TETRIS::setBLOCKinMAP() {
 			// 만약 앞선 조건문에서 GAME OVER 되었더라도 출력은 한다.
 			// 플레이어가 시각적으로 GAME OVER 되었음을 알아야 하므로.
 			// 게임이 진행중인 경우에는 문제없이 전부 출력되게 한다.
-			if (TETRIS_BLOCK[my_BLOCK][i][j] == 1)
+			if (TETRIS_BLOCK[random_NEXTBLOCK][i][j] == 1)
 				TETRIS_MAP[1 + i][5 + j] = 2;
 			else continue;
 		}
@@ -102,8 +101,8 @@ void TETRIS::setBLOCKinMAP() {
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			// 1일 경우에만 0으로 변경해서 블록 출력부를 청소해준다.
-			if (TETRIS_INTERFACE[3 + i][2 + j] == 1)
-				TETRIS_INTERFACE[3 + i][2 + j] = 0;
+			if (TETRIS_INTERFACE[2 + i][2 + j] == 1)
+				TETRIS_INTERFACE[2 + i][2 + j] = 0;
 			else continue;
 		}
 	}
@@ -113,7 +112,7 @@ void TETRIS::setBLOCKinMAP() {
 		for (int j = 0; j < 4; j++) {
 			// 1 일 경우 -> 인터페이스를 수정한다 (1, 1)
 			if (TETRIS_BLOCK[random_NEXTBLOCK][i][j] == 1)
-				TETRIS_INTERFACE[3 + i][2 + j] = 1;
+				TETRIS_INTERFACE[2 + i][2 + j] = 1;
 			else continue;
 		}
 	}

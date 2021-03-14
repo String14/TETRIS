@@ -44,7 +44,7 @@ void TETRIS::threadBLOCK() {
 		// 만약 키보드 입력값이 있다면
 		// 쓰레드 중에 입력값을 받아서 블럭 움직이게 하기
 		if (_kbhit()) {
-			moveBLOCK(); 
+			moveBLOCK();
 		}
 	}
 
@@ -56,7 +56,6 @@ void TETRIS::threadBLOCK() {
 	
 	// 결과 출력
 	printTETRISmap();
-	printINTERFACE();
 }
 
 // 키보드 입력에 따라 블록을 이동시키는 함수
@@ -105,11 +104,6 @@ void TETRIS::moving_DOWN() {
 			}
 		}
 	}
-
-	if (!END) {
-		// 블록 이동이 종료되면 (2) 를 (1) 로 바꿔준다.
-		change2in1();
-	}
 }
 
 // moveBLOCK의 하위 함수
@@ -117,8 +111,6 @@ void TETRIS::moving_DOWN() {
 // → (방향키 오른쪽) 에 대한 반응을 적용하는 함수
 void TETRIS::moving_RIGHT() {
 	// 블록 오른쪽으로 이동
-
-	if (Y == 1) return;
 
 	bool END = 1; // 블록옆에 벽이 있는가?
 	if (END) {
@@ -128,10 +120,7 @@ void TETRIS::moving_RIGHT() {
 					// 한칸 오른쪽으로 이동
 					TETRIS_MAP[i][j] = 2;
 					TETRIS_MAP[i][j - 1] = 0;
-					if (TETRIS_MAP[i][j + 1] == 1 || TETRIS_MAP[i][j + 1] == 9) {
-						Y = 1;
-						END = 0;
-					}
+					if (TETRIS_MAP[i - 1][j] == 1 || TETRIS_MAP[i - 1][j] == 9) END = 0;
 				}
 			}
 		}
@@ -144,8 +133,6 @@ void TETRIS::moving_RIGHT() {
 void TETRIS::moving_LEFT() {
 	// 블록 왼쪽으로 이동
 
-	if (Y == 0) return;
-
 	bool END = 1; // 블록옆에 벽이 있는가?
 	if (END) {
 		for (int j = 1; j < WIDTH - 1; j++) {
@@ -154,10 +141,7 @@ void TETRIS::moving_LEFT() {
 					// 한칸 왼쪽으로 이동
 					TETRIS_MAP[i][j] = 2;
 					TETRIS_MAP[i][j + 1] = 0;
-					if (TETRIS_MAP[i][j - 1] == 1 || TETRIS_MAP[i + 1][j - 1] == 9) {
-						Y = 0;
-						END = 0;
-					}
+					if (TETRIS_MAP[i + 1][j] == 1 || TETRIS_MAP[i + 1][j] == 9) END = 0;
 				}
 			}
 		}
@@ -167,15 +151,11 @@ void TETRIS::moving_LEFT() {
 // moveBLOCK의 하위 함수
 // *** moveBLOCK 밖에서 호출하지 말 것 ***
 // □ (스페이스 바) 에 대한 반응을 적용하는 함수
-// 빠른 시간 안에 연속해서 사용하면 에러
 void TETRIS::moving_SPACE() {
 	// 블록 순간이동
+
 	bool END = 1; // 블록아래 벽이 있는가?
-	while (END) {
-		// 전체 맵 중 (2) 인 요소를 찾는다.
-		// 그 바로 아랫줄에 (1) 이 있는지 탐색한다.
-		// 하나라도 바로 아래에 (1) 이 있다면 이동 중지
-		// 아니라면 계속 이동한다.
+	while (END){
 		for (int i = HEIGHT - 2; i > 0; i--) {
 			for (int j = 1; j < WIDTH - 1; j++) {
 				if (TETRIS_MAP[i][j] == 0 && TETRIS_MAP[i - 1][j] == 2) {
@@ -190,9 +170,6 @@ void TETRIS::moving_SPACE() {
 			}
 		}
 	}
-
-	// 블록 이동이 종료되면 (2) 를 (1) 로 바꿔준다.
-	change2in1();
 }
 
 // moveBLOCK의 하위 함수
@@ -200,34 +177,12 @@ void TETRIS::moving_SPACE() {
 // TAB (탭) 에 대한 반응을 적용하는 함수
 void TETRIS::moving_TAB() {
 	// 블록 저장
-
-	// 이동중인 블록 삭제
 	for (int i = 1; i < HEIGHT - 1; i++) {
 		for (int j = 1; j < WIDTH - 1; j++) {
 			if (TETRIS_MAP[i][j] == 2) TETRIS_MAP[i][j] = 0;
 		}
 	}
 
-	// 저장된 블록을 꺼내 쓸 때 청소가 필요하다.
-	// 인터페이스 저장된 블록 출력부 청소
-	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 4; j++) {
-			// 1일 경우에만 0으로 변경해서 블록 출력부를 청소해준다.
-			if (TETRIS_INTERFACE[12 + i][2 + j] == 1)
-				TETRIS_INTERFACE[12 + i][2 + j] = 0;
-			else continue;
-		}
-	}
-
-	// 인터페이스 저장된 블록 출력부 출력
-	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 4; j++) {
-			// 1 일 경우 -> 인터페이스를 수정한다 (1, 1)
-			if (TETRIS_BLOCK[my_BLOCK][i][j] == 1)
-				TETRIS_INTERFACE[12 + i][2 + j] = 1;
-			else continue;
-		}
-	}
 }
 
 // moveBLOCK의 하위 함수
