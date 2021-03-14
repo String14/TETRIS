@@ -12,7 +12,7 @@ void TETRIS::threadBLOCK() {
 	bool isTWO = 1; // 요소 (2) 를 찾을 수 있는가?
 	while(END && isTWO) {
 		// 블록 움직이는걸 보여주기 위한 딜레이 0.1초
-		Sleep(100);
+		Sleep(50);
 
 		// 아직 (2) 를 찾지 못하였으므로
 		isTWO = 0;
