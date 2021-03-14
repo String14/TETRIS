@@ -139,9 +139,17 @@ private:
 	// setrandomBLOCK 함수를 통해 설정된 블록 값
 	// (런타임 도중 계속 수정 됨)
 	int random_NEXTBLOCK = -1;
+	
+	// 현재 이동중인 블록 값을 저장해둔다.
+	int my_BLOCK;
 
 	// 게임 진행 상태를 표기할 변수
 	bool GAME = PLAYING;
+
+	// Y 좌표값
+	// 상하와 다르게 좌우는 양방향으로 움직일 수 있기 때문에 필요하다.
+	// 0이면 왼쪽 가장자리 / 1이면 오른쪽 가장자리
+	int Y = -1;
 
 	// 기본 생성자, 소멸자 선언
 public:
