@@ -269,7 +269,7 @@ int TETRIS::dropBLOCK(int& local, int& EMPTYnum) {
 
 	for (int i = local; i >= 1; i--) {
 		for (int j = 1; j < WIDTH - 1; j++) {
-			// 이동할 블록이 1 (채뤄진 블록) 일 경우에만 블록 이동 가능
+			// 이동할 블록이 1 (채워진 블록) 일 경우에만 블록 이동 가능
 			if (TETRIS_MAP[i][j] == 1) {
 				// local의 인자를 local + EMPTYnum 위치로 이동
 				TETRIS_MAP[i + EMPTYnum][j] = TETRIS_MAP[i][j];

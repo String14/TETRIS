@@ -45,7 +45,7 @@ int main() {
 
 	// Á¾·á
 	system("cls");
-	gotoxy(25, 8);
+	gotoxy(15, 10);
 	cout << "GAME OVER" << endl << endl;
 	gotoxy(3, 20);
 }
